@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Renderer",
+            "type": "chrome",
+            "request": "attach",
+            "trace": "verbose", // this helps to debug if breakpoints is not hit during debugging, look at the 'debug console' output
+            "port": 9222,
+            "sourceMaps": true,            
+            "webRoot": "${workspaceFolder}",
+            "timeout": 10000,
+            "sourceMapPathOverrides": {
+              "./*": "${workspaceRoot}/src/renderer/*"
+            },            
+        },
+        {
+            "name": "Main",
+            "type": "node",
+            "request": "launch",
+            "protocol": "inspector",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+            "runtimeArgs": [
+              "--remote-debugging-port=9222",
+              "."
+            ],
+            "windows": {
+              "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+            } 
+        }
+    ],
+    "compounds": [
+        {
+          "name": "Main + Renderer",
+          "configurations": [
+            "Main",
+            "Renderer"
+          ]
+        }
+      ]
+}
